@@ -1,0 +1,30 @@
+body {
+  background: #0f0f0f;
+  color: white;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.box {
+  text-align: center;
+}
+
+input {
+  padding: 10px;
+  font-size: 18px;
+  width: 200px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+img {
+  margin-top: 20px;
+  max-width: 300px;
+}
