@@ -9,6 +9,13 @@
 <body>
 
   <div class="box">
+    <div class="tabs">
+  <button onclick="setMode('oracal')">Оракал</button>
+  <button onclick="setMode('oracal-light')">Свето-оракал</button>
+  <button onclick="setMode('diod')">Диод</button>
+  <button onclick="setMode('banner')">Баннер / Фомакс</button>
+</div>
+
     <h2>Введите код</h2>
     <input type="text" id="code" placeholder="4 цифры">
     <button onclick="search()">Найти</button>

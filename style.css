@@ -41,3 +41,16 @@ button {
   max-width: 100%;
   border-radius: 10px;
 }
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}

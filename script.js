@@ -1,126 +1,65 @@
+let mode = "oracal";
+
+function setMode(newMode) {
+  mode = newMode;
+
+  const result = document.getElementById("result");
+  const input = document.getElementById("code");
+
+  result.innerHTML = "";
+
+  // 👇 поле ввода показываем только для оракалов
+  if (mode === "diod" || mode === "banner" || mode === "fomax") {
+    input.style.display = "none";
+    showList();
+  } else {
+    input.style.display = "block";
+  }
+}
+
 function search() {
-  const code = document.getElementById("code").value;
+  const code = document.getElementById("code").value.trim();
   const result = document.getElementById("result");
 
-  const images = {
-    "8720": "images/8720.jpg",
-    "8730": "images/8730.jpg",
-    "8739": "images/8739.jpg",
-    "8720": "images/8720.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-    "1111": "images/1111.jpg",
-
-  };
-
-  if (images[code]) {
-    result.innerHTML = `<img src="${images[code]}">`;
-  } else {
-    result.innerHTML = "❌ Ничего не найдено";
+  if (!code) {
+    result.innerText = "❌ Введите код";
+    return;
   }
+
+  const path = `images/${mode}/${code}.jpg`;
+
+  result.innerHTML = `
+    <img src="${path}"
+      onerror="
+        this.remove();
+        document.getElementById('result').innerText = '❌ Не найдено';
+      ">
+  `;
+}
+
+// СПИСОК КНОПОК
+function showList() {
+  const result = document.getElementById("result");
+  let items = [];
+
+  if (mode === "diod") items = ["red", "blue", "green", "purple"];
+  if (mode === "banner") items = ["big", "small", "enormous", "tiny"];
+  if (mode === "fomax") items = ["white", "black"];
+
+  result.innerHTML = items
+    .map(item => `<button onclick="openItem('${item}')">${item}</button>`)
+    .join("");
+}
+
+function openItem(name) {
+  const result = document.getElementById("result");
+  const path = `images/${mode}/${name}.jpg`;
+
+  result.innerHTML = `
+    <img src="${path}"
+      onerror="
+        this.remove();
+        document.getElementById('result').innerText = '❌ Не найдено';
+      ">
+  `;
 }
