@@ -10,15 +10,15 @@
 
   <div class="box">
     <div class="tabs">
-  <button onclick="setMode('oracal')">Оракал</button>
-  <button onclick="setMode('oracal-light')">Свето-оракал</button>
-  <button onclick="setMode('diod')">Диод</button>
-  <button onclick="setMode('banner')">Баннер / Фомакс</button>
-</div>
+      <button id="tab-oracal" onclick="setMode('oracal')">Оракал</button>
+      <button id="tab-diod" onclick="setMode('diod')">Диод</button>
+      <button id="tab-banner" onclick="setMode('banner')">Баннер</button>
+      <button id="tab-fomax" onclick="setMode('fomax')">Фомакс</button>
+    </div>
 
     <h2>Введите код</h2>
     <input type="text" id="code" placeholder="4 цифры">
-    <button onclick="search()">Найти</button>
+    <button id="search-btn" onclick="search()">🔍 Найти</button>
 
     <div id="result"></div>
   </div>

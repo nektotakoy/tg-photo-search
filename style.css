@@ -8,8 +8,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+    background: linear-gradient(-45deg, #454545, #212121, #131313, #040404);
+  background-size: 400% 400%;
+  animation: gradient 20s ease infinite;
 }
-
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
 .box {
   width: 100%;
   max-width: 420px;
@@ -24,6 +31,7 @@ input {
   border-radius: 8px;
   border: none;
   box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 button {
@@ -41,6 +49,7 @@ button {
   max-width: 100%;
   border-radius: 10px;
 }
+
 .tabs {
   display: flex;
   gap: 8px;
@@ -53,4 +62,11 @@ button {
   padding: 10px;
   font-size: 0.9rem;
   border-radius: 6px;
+  background: #eee;
+  color: #000000;
+}
+
+.tabs button.active {
+  background: #00bfff;
+  color: #fff;
 }
