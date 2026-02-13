@@ -71,11 +71,19 @@ button {
   color: #fff;
 }
 .logo {
-  width: 160px;          /* размер логотипа */
-  max-width: 80%;
-  margin: 0 auto 20px;   /* центр + отступ вниз */
+  width: 120px;         
+  max-width: 60%;
+  margin: 0 auto 16px;
   display: block;
-  opacity: 0.9;          /* чуть стильнее */
-  
+  opacity: 0.9;
+}
+
+
+@media (max-width: 480px) {
+  .logo {
+    width: 90px;       
+    max-width: 70%;
+    margin-bottom: 12px;
+  }
 }
 
