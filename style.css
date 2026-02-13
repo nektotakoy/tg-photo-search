@@ -86,4 +86,14 @@ button {
     margin-bottom: 12px;
   }
 }
+.download-btn {
+  background: #00ff88;
+  color: #000;
+  font-weight: bold;
+}
+
+.download-btn:hover {
+  opacity: 0.9;
+}
+
 
