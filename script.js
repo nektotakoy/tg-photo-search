@@ -27,6 +27,7 @@ function search() {
     document.getElementById("result").innerText = "❌ Введите код";
     return;
   }
+
   showImage(`images/${mode}/${code}.jpg`);
 }
 
@@ -50,29 +51,47 @@ function showImage(path) {
   };
 }
 
-function downloadImage(url) {
-  // iPhone Safari нормально сохраняет через открытие картинки
-  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    const win = window.open(url, "_blank");
-    win.focus();
-    return;
-  }
 
-  // Android + ПК
-  fetch(url)
-    .then(res => res.blob())
-    .then(blob => {
+function downloadImage(url) {
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = url;
+
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+   
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      const dataUrl = canvas.toDataURL("image/jpeg", 1.0);
+      const win = window.open();
+      win.document.write(`
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <img src="${dataUrl}" style="width:100%;height:auto">
+      `);
+      return;
+    }
+
+   
+    canvas.toBlob(blob => {
       const a = document.createElement("a");
       const blobUrl = URL.createObjectURL(blob);
-
       a.href = blobUrl;
       a.download = url.split("/").pop();
       document.body.appendChild(a);
       a.click();
-
       document.body.removeChild(a);
       URL.revokeObjectURL(blobUrl);
-    });
+    }, "image/jpeg", 1);
+  };
+
+  img.onerror = () => {
+    alert("Ошибка загрузки изображения");
+  };
 }
 
 function showList() {
