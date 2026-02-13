@@ -27,7 +27,6 @@ function search() {
     document.getElementById("result").innerText = "❌ Введите код";
     return;
   }
-
   showImage(`images/${mode}/${code}.jpg`);
 }
 
@@ -40,58 +39,47 @@ function showImage(path) {
 
   result.innerHTML = `
     <img id="result-img" src="${path}">
-    <button class="download-btn" onclick="downloadImage('${path}')">
+    <button class="download-btn" onclick="shareImage('${path}')">
       ⬇ Скачать
     </button>
   `;
 
-  const img = document.getElementById("result-img");
-  img.onerror = () => {
+  document.getElementById("result-img").onerror = () => {
     result.innerText = "❌ Не найдено";
   };
 }
 
 
-function downloadImage(url) {
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = url;
+async function shareImage(url) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
 
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+    const fileName = url.split("/").pop();
+    const file = new File([blob], fileName, { type: blob.type });
 
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
 
-   
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      const dataUrl = canvas.toDataURL("image/jpeg", 1.0);
-      const win = window.open();
-      win.document.write(`
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <img src="${dataUrl}" style="width:100%;height:auto">
-      `);
+    if (navigator.share && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: "Image",
+      });
       return;
     }
 
-   
-    canvas.toBlob(blob => {
-      const a = document.createElement("a");
-      const blobUrl = URL.createObjectURL(blob);
-      a.href = blobUrl;
-      a.download = url.split("/").pop();
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
-    }, "image/jpeg", 1);
-  };
+  
+    const a = document.createElement("a");
+    const blobUrl = URL.createObjectURL(blob);
+    a.href = blobUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
 
-  img.onerror = () => {
-    alert("Ошибка загрузки изображения");
-  };
+  } catch (e) {
+    alert("Не удалось открыть меню сохранения");
+  }
 }
 
 function showList() {
