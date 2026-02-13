@@ -70,3 +70,12 @@ button {
   background: #00bfff;
   color: #fff;
 }
+.logo {
+  width: 160px;          /* размер логотипа */
+  max-width: 80%;
+  margin: 0 auto 20px;   /* центр + отступ вниз */
+  display: block;
+  opacity: 0.9;          /* чуть стильнее */
+  
+}
+
